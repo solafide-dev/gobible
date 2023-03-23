@@ -48,6 +48,6 @@ Or you can lookup by reference:
       fmt.Printf("%s %d:%d %s", r.Book, r.Chapter, r.VerseNumber, r.Verse.Text)
     }
     // Genesis 1:31 God saw everything that he had made, and, behold, it was very good. There was evening and there was morning, the sixth day.
-    //Genesis 2:1 The heavens and the earth were finished, and all the host of them.
+    // Genesis 2:1 The heavens and the earth were finished, and all the host of them.
 
 ```
