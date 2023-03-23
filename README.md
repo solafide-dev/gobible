@@ -1,12 +1,22 @@
 # Go Bible
 
-A JSON Format, and Go Module for storing and interacing with the Protestant Bible.
+Gobible is a library for interacting with the protestant bible in Go.
 
-## ALPHA SOFTWARE
+It is designed to be a simple, easy to use API for working with the Bible.
 
-This repository is under active development, with no guarantee of stability or API compatibility.
+## Bible Formats
 
-Once I am happy with the functionality (and add test coverage), I will release a v1.0.0.
+Initially, Gobible was created as an effort to support an easy to use JSON format for the Bible for use in other projects,
+but through development has grown to instead be a library for working with that format, as well and importing other formats into the Gobible format.
+### Supported Formats
+- Gobible JSON [Example](https://raw.githubusercontent.com/applehat/gobible/master/data/WEB.json)
+- OSIS XML [Example](https://raw.githubusercontent.com/applehat/gobible/master/data/WEB.xml)
+
+
+Please note that since Gobible works around a data structure defined by the Gobible JSON format, some features of other formats may not be supported.
+
+
+
 
 ## Usage
 
