@@ -2,7 +2,6 @@ package bible
 
 import (
 	"errors"
-	"log"
 	"strconv"
 	"strings"
 )
@@ -11,12 +10,7 @@ type Reference struct {
 	Book        string
 	Chapter     int
 	VerseNumber int
-	Verse       Verse
-}
-
-// If the book reference is a short code, attempt to convert it to the full name and update the reference
-func (r *Reference) NormalizeBook() {
-	r.Book = NormalizeBookName(r.Book)
+	Verse       *Verse
 }
 
 // Take a string and return a slice of Reference structs
@@ -39,9 +33,9 @@ func (b *Bible) ParseReference(reference string) ([]Reference, error) {
 	chapterVersePart := parts[len(parts)-1]
 	chapterVerseParts := strings.Split(chapterVersePart, "-")
 
-	log.Println("book", book)
-	log.Println("chapterVersePart", chapterVersePart)
-	log.Println("chapterVerseParts", chapterVerseParts)
+	//log.Println("book", book)
+	//log.Println("chapterVersePart", chapterVersePart)
+	//log.Println("chapterVerseParts", chapterVerseParts)
 
 	var startChapter, endChapter, startVerse, endVerse int
 	chapterParts := strings.Split(chapterVerseParts[0], ":")
@@ -49,23 +43,23 @@ func (b *Bible) ParseReference(reference string) ([]Reference, error) {
 		return nil, errors.New("invalid chapter format")
 	}
 
-	log.Println("chapterParts", chapterParts)
+	//log.Println("chapterParts", chapterParts)
 
 	startChapter, err := strconv.Atoi(chapterParts[0])
 	if err != nil {
 		return nil, err
 	}
 
-	log.Println("startChapter", startChapter)
+	//log.Println("startChapter", startChapter)
 
 	startVerse, err = strconv.Atoi(chapterParts[1])
 	if err != nil {
 		return nil, err
 	}
 
-	log.Println("startVerse", startVerse)
+	//log.Println("startVerse", startVerse)
 
-	log.Println("len(chapterVerseParts)", len(chapterVerseParts))
+	//log.Println("len(chapterVerseParts)", len(chapterVerseParts))
 
 	if len(chapterVerseParts) > 1 {
 		chapterParts := strings.Split(chapterVerseParts[1], ":")
@@ -101,11 +95,11 @@ func (b *Bible) ParseReference(reference string) ([]Reference, error) {
 
 	var references []Reference
 	for chapter := startChapter; chapter <= endChapter; chapter++ {
-		log.Println("chapter", chapter)
+		//log.Println("chapter", chapter)
 		start, end := startVerse, endVerse
 
-		log.Println("start", start)
-		log.Println("end", end)
+		//log.Println("start", start)
+		//log.Println("end", end)
 
 		if chapter > startChapter {
 			start = 1
@@ -122,15 +116,17 @@ func (b *Bible) ParseReference(reference string) ([]Reference, error) {
 			verses[i] = start + i
 		}
 
-		log.Println("verses", verses)
+		//log.Println("verses", verses)
+
+		book = NormalizeBookName(book)
 
 		for _, verse := range verses {
 			ref := Reference{
 				Book:        book,
 				Chapter:     chapter,
 				VerseNumber: verse,
+				Verse:       b.GetBook(book).GetChapter(chapter).GetVerse(verse),
 			}
-			ref.NormalizeBook()
 			references = append(references, ref)
 		}
 	}

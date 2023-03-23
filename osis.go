@@ -78,7 +78,7 @@ type Osis struct {
 }
 
 // Open an OSIS file, parse it, and return a Bible object
-func NewBibleOSISFile(filename string) *bible.Bible {
+func NewOSIS(filename string) *bible.Bible {
 	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)

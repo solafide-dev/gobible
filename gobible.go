@@ -10,7 +10,7 @@ import (
 )
 
 // Open a bible file and return a pointer to a Bible struct
-func NewBible(file string) *bible.Bible {
+func New(file string) *bible.Bible {
 	f, err := os.Open(file)
 	if err != nil {
 		log.Fatal(err)
@@ -27,7 +27,7 @@ func NewBible(file string) *bible.Bible {
 }
 
 // Create a Bible struct from a jSON string
-func NewBibleFromString(bibleJSON string) *bible.Bible {
+func NewFromString(bibleJSON string) *bible.Bible {
 	var bible bible.Bible
 	err := json.Unmarshal([]byte(bibleJSON), &bible)
 	if err != nil {
@@ -37,11 +37,21 @@ func NewBibleFromString(bibleJSON string) *bible.Bible {
 	return &bible
 }
 
+//go:embed data/WEB.json
+var WEB string
+
 //go:embed data/KJV.json
 var KJV string
 
 // Return a pointer to a Bible struct with the King James Version
-// The KJV is embedded in the binary by default
-func NewBibleKJV() *bible.Bible {
-	return NewBibleFromString(KJV)
+// The WEB is embedded in the binary by default
+func LoadInternal(version string) *bible.Bible {
+	switch version {
+	case "WEB":
+		return NewFromString(WEB)
+	case "KJV":
+		return NewFromString(KJV)
+	}
+	log.Fatalf("Version %s not found", version)
+	return &bible.Bible{}
 }
