@@ -13,7 +13,12 @@ func (b *Book) GetName() string {
 
 // Use the book number to get the English name of the book
 func (b *Book) GetEnglishName() string {
-	return bibleNumberToEnglishBook[b.Number]
+	for _, book := range booksTable {
+		if book.BookNumber == b.Number {
+			return book.Name
+		}
+	}
+	return ""
 }
 
 func (b *Book) GetChapter(number int) *Chapter {

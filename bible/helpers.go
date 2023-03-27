@@ -41,9 +41,9 @@ func BookIsValid(bookIn string) bool {
 
 // Takes a normalized (see NormalizeBookName) book name and returns the book number
 func BookNumberFromName(normalized string) int {
-	for index, book := range bibleNumberToEnglishBook {
-		if book == normalized {
-			return index
+	for _, book := range booksTable {
+		if book.Name == normalized {
+			return book.BookNumber
 		}
 	}
 	return -1

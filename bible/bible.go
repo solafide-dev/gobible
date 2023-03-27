@@ -20,12 +20,13 @@ func (b *Bible) GetBook(name string) *Book {
 			return &book
 		}
 	}
-	// if we get here, lets try to find the book by number.
-	for index, book := range bibleNumberToEnglishBook {
-		if book == name {
-			for _, book := range b.Books {
-				if book.Number == index {
-					return &book
+
+	// Lookup by english name and book number
+	for _, book := range booksTable {
+		if book.Name == name {
+			for _, book2 := range b.Books {
+				if book2.Number == book.BookNumber {
+					return &book2
 				}
 			}
 		}
