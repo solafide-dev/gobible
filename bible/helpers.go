@@ -5,16 +5,13 @@ import "strings"
 // Helper Function that can normalize a book name
 // (e.g. "Ezk" -> "Ezekiel)
 func NormalizeBookName(bookIn string) string {
-	for book, _ := range bookEnglishShortNames {
-		if strings.EqualFold(bookIn, book) {
-			return book
+	for _, book := range booksTable {
+		if strings.EqualFold(bookIn, book.Name) {
+			return book.Name
 		}
-	}
-	// No match found, we must traverse the book names and find the closest match
-	for book, names := range bookEnglishShortNames {
-		for _, name := range names {
-			if strings.EqualFold(bookIn, name) {
-				return book
+		for _, altName := range book.Alts {
+			if strings.EqualFold(bookIn, altName) {
+				return book.Name
 			}
 		}
 	}
@@ -23,15 +20,12 @@ func NormalizeBookName(bookIn string) string {
 
 // Helper Function that can validate a book name
 func BookIsValid(bookIn string) bool {
-	for book, _ := range bookEnglishShortNames {
-		if strings.EqualFold(bookIn, book) {
+	for _, book := range booksTable {
+		if strings.EqualFold(bookIn, book.Name) {
 			return true
 		}
-	}
-	// No match found, we must traverse the book names and find the closest match
-	for _, names := range bookEnglishShortNames {
-		for _, name := range names {
-			if strings.EqualFold(bookIn, name) {
+		for _, altName := range book.Alts {
+			if strings.EqualFold(bookIn, altName) {
 				return true
 			}
 		}
