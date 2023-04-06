@@ -9,6 +9,11 @@ import (
 	bible "github.com/applehat/gobible/bible"
 )
 
+// Create an empty Bible
+func NewEmpty() *bible.Bible {
+	return &bible.Bible{}
+}
+
 // Open a bible file and return a pointer to a Bible struct
 func New(file string) *bible.Bible {
 	f, err := os.Open(file)

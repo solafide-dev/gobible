@@ -4,6 +4,7 @@ package bible
 type Chapter struct {
 	Number int     `json:"number"`
 	Name   string  `json:"name"`
+	Title  string  `json:"title"`
 	Verses []Verse `json:"verses"`
 }
 
