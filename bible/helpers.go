@@ -5,7 +5,7 @@ import "strings"
 // Helper Function that can normalize a book name
 // (e.g. "Ezk" -> "Ezekiel)
 func NormalizeBookName(bookIn string) string {
-	for _, book := range booksTable {
+	for _, book := range BooksTable {
 		if strings.EqualFold(bookIn, book.Name) {
 			return book.Name
 		}
@@ -20,7 +20,7 @@ func NormalizeBookName(bookIn string) string {
 
 // Helper Function that can validate a book name
 func BookIsValid(bookIn string) bool {
-	for _, book := range booksTable {
+	for _, book := range BooksTable {
 		if strings.EqualFold(bookIn, book.Name) {
 			return true
 		}
@@ -35,7 +35,7 @@ func BookIsValid(bookIn string) bool {
 
 // Takes a normalized (see NormalizeBookName) book name and returns the book number
 func BookNumberFromName(normalized string) int {
-	for _, book := range booksTable {
+	for _, book := range BooksTable {
 		if book.Name == normalized {
 			return book.BookNumber
 		}

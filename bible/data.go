@@ -9,7 +9,7 @@ type BookData struct {
 	Genre      string
 }
 
-var booksTable = []BookData{
+var BooksTable = []BookData{
 	{
 		BookNumber: 1,
 		Name:       "Genesis",

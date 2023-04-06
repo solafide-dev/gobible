@@ -22,7 +22,7 @@ func (b *Bible) GetBook(name string) *Book {
 	}
 
 	// Lookup by english name and book number
-	for _, book := range booksTable {
+	for _, book := range BooksTable {
 		if book.Name == name {
 			for _, book2 := range b.Books {
 				if book2.Number == book.BookNumber {
