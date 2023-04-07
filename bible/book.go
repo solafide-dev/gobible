@@ -4,6 +4,7 @@ package bible
 type Book struct {
 	Number   int       `json:"number"`
 	Name     string    `json:"name"`
+	Notes    string    `json:"notes"` // translation notes that might be relevant to store
 	Chapters []Chapter `json:"chapters"`
 }
 
