@@ -2,10 +2,12 @@ package bible
 
 // Chapter holds the number and verses of a chapter
 type Chapter struct {
-	Number int     `json:"number"`
-	Name   string  `json:"name"`
-	Title  string  `json:"title"`
-	Verses []Verse `json:"verses"`
+	Number  int     `json:"number"`
+	Name    string  `json:"name"`
+	Title   string  `json:"title"`
+	Content string  `json:"content"` // optional content that is not a verse, in markdown format
+	Notes   string  `json:"notes"`   // optional notes that are not a verse, in markdown format
+	Verses  []Verse `json:"verses"`
 }
 
 func (c *Chapter) GetVerseCount() int {

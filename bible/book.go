@@ -22,6 +22,18 @@ func (b *Book) GetEnglishName() string {
 	return ""
 }
 
+func (b *Book) GetChapterOrCreate(number int) *Chapter {
+	chapter := b.GetChapter(number)
+	if chapter == nil {
+		// Not found? Add it.
+		b.Chapters = append(b.Chapters, Chapter{
+			Number: number,
+		})
+		return &b.Chapters[len(b.Chapters)-1]
+	}
+	return chapter
+}
+
 func (b *Book) GetChapter(number int) *Chapter {
 	for k := range b.Chapters {
 		chapter := &b.Chapters[k]
