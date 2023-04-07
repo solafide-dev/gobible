@@ -1,3 +1,3 @@
-module github.com/applehat/gobible
+module github.com/gobible/gobible
 
 go 1.19
