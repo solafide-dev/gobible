@@ -81,4 +81,5 @@ func (b *Bible) Save(fileName string) error {
 	if err != nil {
 		return err
 	}
+	return nil
 }
