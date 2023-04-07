@@ -1,5 +1,10 @@
 package bible
 
+import (
+	"encoding/json"
+	"os"
+)
+
 // Bible is the main struct that holds all the data
 type Bible struct {
 	Version Version `json:"version"`
@@ -65,4 +70,15 @@ func (b *Bible) GetName() string {
 
 func (b *Bible) GetAbbrev() string {
 	return b.Version.Abbrev
+}
+
+func (b *Bible) Save(fileName string) error {
+	file, err := json.MarshalIndent(b, "", " ")
+	if err != nil {
+		return err
+	}
+	err = os.WriteFile(fileName, file, 0644)
+	if err != nil {
+		return err
+	}
 }
