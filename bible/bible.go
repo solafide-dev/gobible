@@ -15,18 +15,20 @@ type Version struct {
 // GetBook returns a pointer to a Book struct by the name of the book
 func (b *Bible) GetBook(name string) *Book {
 	name = NormalizeBookName(name)
-	for _, book := range b.Books {
+	for k := range b.Books {
+		book := &b.Books[k]
 		if book.Name == name {
-			return &book
+			return book
 		}
 	}
 
 	// Lookup by english name and book number
 	for _, book := range BooksTable {
 		if book.Name == name {
-			for _, book2 := range b.Books {
+			for k := range b.Books {
+				book2 := &b.Books[k]
 				if book2.Number == book.BookNumber {
-					return &book2
+					return book2
 				}
 			}
 		}

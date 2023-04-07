@@ -23,10 +23,31 @@ func (c *Chapter) GetVerse(number int) *Verse {
 
 func (c *Chapter) GetVerses(start, end int) []Verse {
 	var verses []Verse
-	for _, verse := range c.Verses {
+	for k := range c.Verses {
+		verse := &c.Verses[k]
 		if verse.Number >= start && verse.Number <= end {
-			verses = append(verses, verse)
+			verses = append(verses, *verse)
 		}
 	}
 	return verses
+}
+
+// Set chapter title
+func (c *Chapter) SetTitle(title string) {
+	c.Title = title
+}
+
+// Set verse text, optionally adding the verse if its missing
+func (c *Chapter) SetVerse(number int, text string) {
+	for k := range c.Verses {
+		verse := &c.Verses[k]
+		if verse.Number == number {
+			verse.Text = text
+			return
+		}
+	}
+	c.Verses = append(c.Verses, Verse{
+		Number: number,
+		Text:   text,
+	})
 }

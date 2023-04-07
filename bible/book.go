@@ -22,9 +22,10 @@ func (b *Book) GetEnglishName() string {
 }
 
 func (b *Book) GetChapter(number int) *Chapter {
-	for _, chapter := range b.Chapters {
+	for k := range b.Chapters {
+		chapter := &b.Chapters[k]
 		if chapter.Number == number {
-			return &chapter
+			return chapter
 		}
 	}
 	return nil

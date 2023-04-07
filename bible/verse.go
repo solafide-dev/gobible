@@ -8,6 +8,10 @@ type Verse struct {
 	Formatting []Formatting `json:"formatting,omitempty"` // optional
 }
 
+func (v *Verse) SetText(text string) {
+	v.Text = text
+}
+
 type Footnote struct {
 	Marker string `json:"number"`
 	Text   string `json:"text"`
