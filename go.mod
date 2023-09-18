@@ -1,3 +1,3 @@
-module github.com/gobible/gobible
+module github.com/simpleworship/gobible
 
 go 1.19
