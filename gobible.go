@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	bible "github.com/simpleworship/gobible/bible"
+	bible "github.com/solafide-dev/gobible/bible"
 )
 
 // Create an empty Bible

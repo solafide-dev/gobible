@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	bible "github.com/simpleworship/gobible/bible"
+	bible "github.com/solafide-dev/gobible/bible"
 )
 
 type Osis struct {
