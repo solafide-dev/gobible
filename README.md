@@ -49,6 +49,20 @@ fmt.Println("Genesis 1:1 - " + verse.Text)
 // Genesis 1:1 - In the beginning God created the heaven and the earth.
 ```
 
+You can also use this to generate GoBible format JSON files from other formats:
+
+```go
+b := NewGoBible()
+// Load an OSIS XML file
+b.LoadFormat("WEB.xml", "osis")
+
+// Save the translation as GoBible JSON
+goBibleJson := b.GetBibleJSON("WEB")
+
+// Save the translation as GoBible JSON to a file
+os.WriteFile("WEB.json", []byte(goBibleJson), 0644)
+```
+
 ### Interacting by Reference
 
 Once you have 1 or multiple translations loaded, you can interact with them by reference notation.
