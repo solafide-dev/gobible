@@ -11,6 +11,7 @@ import (
 
 type GoBible struct {
 	bibles map[string]*bible.Bible
+	loaded []string
 }
 
 // Load a translation into the GoBible struct in GoBible format
@@ -39,10 +40,15 @@ func (g *GoBible) LoadString(bibleJSON string) error {
 		return err
 	}
 
+	if bible.Version.Abbrev == "" {
+		return errors.New("bible abbreviation not found in JSON")
+	}
+
 	// check if the bible is already loaded
 	if _, ok := g.bibles[bible.Version.Abbrev]; ok {
 		return errors.New("bible of type " + bible.Version.Abbrev + " already loaded")
 	}
+	g.loaded = append(g.loaded, bible.Version.Abbrev)
 	g.bibles[bible.Version.Abbrev] = &bible
 	return nil
 }
@@ -75,6 +81,7 @@ func (g *GoBible) load(filename string, format string) error {
 			if _, ok := g.bibles[b.Version.Abbrev]; ok {
 				return errors.New("bible of type " + b.Version.Abbrev + " already loaded")
 			}
+			g.loaded = append(g.loaded, b.Version.Abbrev)
 			g.bibles[b.Version.Abbrev] = b
 			return nil
 		}

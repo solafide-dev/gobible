@@ -10,21 +10,6 @@ import (
 
 type References []Reference
 
-func (r References) String() string {
-	var s string
-
-	for i, ref := range r {
-		// If this is the last reference, or the next reference is not the same chapter and book
-		// lets append the reference to the string
-		if (i == len(r)-1) || (ref.Book != r[i+1].Book) || (ref.Book != r[i+1].Book && ref.Chapter != r[i+1].Chapter) {
-			s += "\n\n - " + ref.Book + " " + strconv.Itoa(ref.Chapter) + ":" + strconv.Itoa(ref.Verse) + " " + ref.Translation
-		} else {
-			s += strconv.Itoa(ref.Verse) + ". " + ref.VerseRef.Text
-		}
-	}
-	return s
-}
-
 type Reference struct {
 	Book        string
 	Chapter     int
@@ -42,11 +27,8 @@ func (r *Reference) String() string {
 //
 //	John 3:16
 //	John 3:16-18
-//	1Cor1.2-5
-//	1Cor1.2-5,7
-//	1Cor1.2-5,7-9
-//	1Cor1.2-2Cor3.2
-//	Matthew 5:1, John 3:16
+//	1 Cor 1:2-5
+//	1 Cor 1:2-2:5
 //
 // Also supports translations tagged at the end:
 //
@@ -65,21 +47,23 @@ func (g *GoBible) ParseReference(reference string) (References, error) {
 
 	// by default, we'll use the first translation loaded
 
-	translation := ""
+	translation := g.loaded[0]
 
 	// lets check if the last part happens to be a translation
 	// if it is, we'll remove it from the parts slice
 	// and set it as the translation for the reference
 	potentialTranslation := strings.ToLower(parts[len(parts)-1])
-	for t, _ := range g.bibles {
-		if translation == "" {
-			// set first translation as our default
-			translation = t
-		}
-		if strings.ToLower(t) == potentialTranslation {
-			parts = parts[:len(parts)-1]
-			translation = t
-			break
+
+	// check if potnetialTranslation starts with a number
+	if _, err := strconv.Atoi(string(potentialTranslation[0])); err != nil {
+		// nix this off the end of the parts slice
+		parts = parts[:len(parts)-1]
+
+		for t, _ := range g.bibles {
+			if strings.ToLower(t) == potentialTranslation {
+				translation = t
+				break
+			}
 		}
 	}
 
