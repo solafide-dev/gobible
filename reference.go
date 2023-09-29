@@ -1,33 +1,89 @@
-package bible
+package gobible
 
 import (
 	"errors"
 	"strconv"
 	"strings"
+
+	bible "github.com/solafide-dev/gobible/bible"
 )
+
+type References []Reference
+
+func (r References) String() string {
+	var s string
+
+	for i, ref := range r {
+		// If this is the last reference, or the next reference is not the same chapter and book
+		// lets append the reference to the string
+		if (i == len(r)-1) || (ref.Book != r[i+1].Book) || (ref.Book != r[i+1].Book && ref.Chapter != r[i+1].Chapter) {
+			s += "\n\n - " + ref.Book + " " + strconv.Itoa(ref.Chapter) + ":" + strconv.Itoa(ref.Verse) + " " + ref.Translation
+		} else {
+			s += strconv.Itoa(ref.Verse) + ". " + ref.VerseRef.Text
+		}
+	}
+	return s
+}
 
 type Reference struct {
 	Book        string
 	Chapter     int
-	VerseNumber int
-	Verse       *Verse
+	Verse       int
+	Translation string
+	VerseRef    *bible.Verse
 }
 
-// Take a string and return a slice of Reference structs
-// Example Inputs:
-// 	John 3:16
-// 	John 3:16-18
-//  1Cor1.2-5
-//  1Cor1.2-5,7
-//  1Cor1.2-5,7-9
-//  1Cor1.2-2Cor3.2
-//  Matthew 5:1, John 3:16
+func (r *Reference) String() string {
+	return r.VerseRef.Text + " - " + r.Book + " " + strconv.Itoa(r.Chapter) + ":" + strconv.Itoa(r.Verse) + " " + r.Translation
+}
 
-func (b *Bible) ParseReference(reference string) ([]Reference, error) {
+// Take a string and return a Refrences object
+// Example Inputs:
+//
+//	John 3:16
+//	John 3:16-18
+//	1Cor1.2-5
+//	1Cor1.2-5,7
+//	1Cor1.2-5,7-9
+//	1Cor1.2-2Cor3.2
+//	Matthew 5:1, John 3:16
+//
+// Also supports translations tagged at the end:
+//
+//	John 3:16 ESV
+//	John 3:16 KJV
+func (g *GoBible) ParseReference(reference string) (References, error) {
+	// if we have no loaded bibles, return an error
+	if len(g.bibles) == 0 {
+		return nil, errors.New("no bibles loaded")
+	}
+
 	parts := strings.Split(reference, " ")
 	if len(parts) < 2 {
 		return nil, errors.New("invalid reference format")
 	}
+
+	// by default, we'll use the first translation loaded
+
+	translation := ""
+
+	// lets check if the last part happens to be a translation
+	// if it is, we'll remove it from the parts slice
+	// and set it as the translation for the reference
+	potentialTranslation := strings.ToLower(parts[len(parts)-1])
+	for t, _ := range g.bibles {
+		if translation == "" {
+			// set first translation as our default
+			translation = t
+		}
+		if strings.ToLower(t) == potentialTranslation {
+			parts = parts[:len(parts)-1]
+			translation = t
+			break
+		}
+	}
+
+	b := g.bibles[translation]
 
 	book := strings.Join(parts[:len(parts)-1], " ")
 	chapterVersePart := parts[len(parts)-1]
@@ -118,14 +174,15 @@ func (b *Bible) ParseReference(reference string) ([]Reference, error) {
 
 		//log.Println("verses", verses)
 
-		book = NormalizeBookName(book)
+		book = bible.NormalizeBookName(book)
 
 		for _, verse := range verses {
 			ref := Reference{
 				Book:        book,
 				Chapter:     chapter,
-				VerseNumber: verse,
-				Verse:       b.GetBook(book).GetChapter(chapter).GetVerse(verse),
+				Verse:       verse,
+				Translation: translation,
+				VerseRef:    b.GetBook(book).GetChapter(chapter).GetVerse(verse),
 			}
 			references = append(references, ref)
 		}

@@ -1,8 +1,7 @@
-package gobible
+package importer
 
 import (
 	"encoding/xml"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -77,18 +76,17 @@ type Osis struct {
 	} `xml:"osisText"`
 }
 
-// Open an OSIS file, parse it, and return a Bible object
-func NewOSIS(filename string) *bible.Bible {
+func (o *Osis) Import(filename string) (*bible.Bible, error) {
 	file, err := os.Open(filename)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	defer file.Close()
 
 	var osis Osis
 	err = xml.NewDecoder(file).Decode(&osis)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	b := bible.Bible{}
@@ -126,5 +124,10 @@ func NewOSIS(filename string) *bible.Bible {
 		}
 	}
 
-	return &b
+	return &b, nil
+}
+
+// Open an OSIS file, parse it, and return a Bible object
+func NewOsisImporter() Importer {
+	return &Osis{}
 }
