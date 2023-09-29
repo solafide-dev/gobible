@@ -84,7 +84,7 @@ Once you have 1 or multiple translations loaded, you can interact with them by r
 // Lookup by reference
 refs, _ := b.ParseReference("Gen 1:31-2:1")
 for _, r := range refs {
-    fmt.Printf("%s %d:%d %s", r.Book, r.Chapter, r.VerseNumber, r.Verse.Text)
+    fmt.Printf("%s %d:%d %s", r.Book, r.Chapter, r.Verse, r.VerseRef.Text)
 }
 // Genesis 1:31 God saw everything that he had made, and, behold, it was very good. There was evening and there was morning, the sixth day.
 // Genesis 2:1 The heavens and the earth were finished, and all the host of them.
