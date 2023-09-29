@@ -67,6 +67,18 @@ func (g *GoBible) GetBibleJSON(abbrev string) (string, error) {
 	return string(bJSON), nil
 }
 
+func (g *GoBible) GetTranslation(t string) (*bible.Bible, error) {
+	if _, ok := g.bibles[t]; !ok {
+		return nil, errors.New("bible not found")
+	}
+
+	return g.bibles[t], nil
+}
+
+func (g *GoBible) GetTranslations() []string {
+	return g.loaded
+}
+
 // internal load function using the importer package
 func (g *GoBible) load(filename string, format string) error {
 	formats := importer.GetImporterNames()
