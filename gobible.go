@@ -32,6 +32,17 @@ func (g *GoBible) LoadFormat(filename string, format string) error {
 	return g.load(filename, format)
 }
 
+// Load a translation into the GoBible struct from a bible.Bible object
+func (g *GoBible) LoadObject(obj bible.Bible) error {
+	// check if the bible is already loaded
+	if _, ok := g.bibles[obj.Version.Abbrev]; ok {
+		return errors.New("bible of type " + obj.Version.Abbrev + " already loaded")
+	}
+	g.loaded = append(g.loaded, obj.Version.Abbrev)
+	g.bibles[obj.Version.Abbrev] = &obj
+	return nil
+}
+
 // Load a string containing a GoBible JSON string
 func (g *GoBible) LoadString(bibleJSON string) error {
 	var bible bible.Bible

@@ -72,6 +72,14 @@ func (b *Bible) GetAbbrev() string {
 	return b.Version.Abbrev
 }
 
+func (b *Bible) ToJSON() (string, error) {
+	file, err := json.MarshalIndent(b, "", " ")
+	if err != nil {
+		return "", err
+	}
+	return string(file), nil
+}
+
 func (b *Bible) Save(fileName string) error {
 	file, err := json.MarshalIndent(b, "", " ")
 	if err != nil {
