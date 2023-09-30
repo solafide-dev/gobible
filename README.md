@@ -2,8 +2,6 @@
 
 Gobible is a library for interacting with the Bible in Go.
 
-It is designed to be a simple, easy to use API for working with the Bible.
-
 ## Bible Formats
 
 Initially, Gobible was created as an effort to support an easy to use JSON format for the Bible for use in other projects,
