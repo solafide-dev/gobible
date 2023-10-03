@@ -87,3 +87,7 @@ for _, r := range refs {
 // Genesis 1:31 God saw everything that he had made, and, behold, it was very good. There was evening and there was morning, the sixth day.
 // Genesis 2:1 The heavens and the earth were finished, and all the host of them.
 ```
+
+## Looking for Bibles?
+
+We have published a few Public Domain bibles, as well as a Go program to generate additional ones in the [gobible-gen](https://github.com/solafide-dev/gobible-gen) repo.
