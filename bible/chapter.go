@@ -4,9 +4,9 @@ package bible
 type Chapter struct {
 	Number  int     `json:"number"`
 	Name    string  `json:"name"`
-	Title   string  `json:"title"`
-	Content string  `json:"content"` // optional content that is not a verse, in markdown format
-	Notes   string  `json:"notes"`   // optional notes that are not a verse, in markdown format
+	Title   string  `json:"title,omitempty"`
+	Content string  `json:"content,omitempty"` // optional content that is not a verse, in markdown format
+	Notes   string  `json:"notes,omitempty"`   // optional notes that are not a verse, in markdown format
 	Verses  []Verse `json:"verses"`
 }
 

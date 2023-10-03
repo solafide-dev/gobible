@@ -14,13 +14,17 @@ type Bible struct {
 
 // Version holds the name and abbreviation of the bible version
 type Version struct {
-	Name   string `json:"name"`
-	Abbrev string `json:"abbrev"`
+	Name      string `json:"name"`
+	Abbrev    string `json:"abbrev"`
+	Publisher string `json:"publisher"`
+	Copyright string `json:"copyright"`
+	Language  string `json:"language"`
 }
 
 type Extra struct {
 	Preface  string `json:"preface"`  // Markdown Preface
 	Foreword string `json:"foreword"` // Markdown Forword
+	About    string `json:"about"`    // Markdown About
 }
 
 // GetBook returns a pointer to a Book struct by the name of the book
