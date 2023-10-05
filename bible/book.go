@@ -2,10 +2,10 @@ package bible
 
 // Book holds the name and chapters of a book
 type Book struct {
-	Number   int       `json:"number"`
-	Name     string    `json:"name"`
-	Notes    string    `json:"notes"` // translation notes that might be relevant to store
-	Chapters []Chapter `json:"chapters"`
+	Number   int           `json:"number"`
+	Name     string        `json:"name"`
+	Notes    BibleMarkdown `json:"notes"` // translation notes that might be relevant to store
+	Chapters []Chapter     `json:"chapters"`
 }
 
 func (b *Book) GetName() string {
