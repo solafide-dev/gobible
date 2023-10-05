@@ -15,7 +15,7 @@ jobs:
       with:
         source_file: 'README.md'
         destination_repo: 'solafide-dev/solafide-dev.github.io'
-        destination_folder: 'packages/gobible'
+        destination_folder: 'content/en/docs/Libraries/gobible'
         user_email: 'cameronchunn@gmail.com'
         user_name: 'applehat'
         commit_message: 'Update README.md from gobible repo'
